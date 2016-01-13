@@ -177,6 +177,14 @@ class MResultRoot
 		end
 	end
 
+	def eql?(_rto)
+		@axes.eql?(_rto.axes)
+	end
+
+	def hash
+		@axes.hash
+	end
+
 	def axes_path
 		as = deepcopy(@axes)
 		if job_file
@@ -252,6 +260,10 @@ class << MResultRoot
 		return true if File.exists? File.join(path, self::JOB_FILE1)
 		return false if !File.exists? path
 		return Dir[File.join path, self::JOB_GLOB].first
+	end
+
+	def from_nmresult_root(nmresult_root)
+		new nmresult_root.mresult_root_path
 	end
 end
 

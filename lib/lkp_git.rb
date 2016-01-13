@@ -166,14 +166,21 @@ def axis_key_project(axis_key)
 	when 'head_commit', 'base_commit'
 		'linux'
 	when /_commit$/
-		key.sub(/_commit$/, '')
+		axis_key.sub(/_commit$/, '')
+	end
+end
+
+def axis_key_git(axis_key)
+	project = axis_key_project(axis_key)
+	if project
+		Git.open(project: project)
 	end
 end
 
 def axis_format(axis_key, value)
-	project = axis_key_project(axis_key)
-	if project
-		tag = Git.open(project: project).gcommit(value).tags.first
+	git = axis_key_git(axis_key)
+	if git
+		tag = git.gcommit(value).tags.first
 		if tag
 			[axis_key, tag]
 		else
@@ -182,6 +189,10 @@ def axis_format(axis_key, value)
   else
 		[axis_key, value]
 	end
+end
+
+def commits_to_string(commits)
+	commits.map { |c| c.to_s }
 end
 
 def __git_committer_name(commit)

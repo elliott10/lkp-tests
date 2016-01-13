@@ -520,8 +520,16 @@ module DataStore
 			@axes.freeze
 		end
 
-		def hash
+		def axes_hash
 			Layout.axes_hash(axes)
+		end
+
+		def eql?(no)
+			@axes.eql?(no.axes)
+		end
+
+		def hash
+			@axes.hash
 		end
 
 		def matrix_file

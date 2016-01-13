@@ -92,6 +92,7 @@ module Compare
 		# following properties are parameters for compare
 		prop_reader :stat_calc_funcs
 		prop_with :mresult_roots, :compare_axis_keys,
+							:sort_mresult_roots, :dedup_mresult_roots,
 							:use_all_stat_keys, :use_stat_keys,
 							:use_testcase_stat_keys,
 							:include_stat_keys, :include_all_failure_stat_keys,
@@ -103,6 +104,8 @@ module Compare
 
 		def initialize(params = nil)
 			@show_empty_group = false
+			@sort_mresult_roots = true
+			@dedup_mresult_roots = true
 			set_params params
 			@stat_calc_funcs = [Compare.method(:calc_stat_change)]
 		end
@@ -114,7 +117,39 @@ module Compare
 			self
 		end
 
-		def compare_groups
+		def do_sort_mresult_roots
+			if sort_mresult_roots
+				skeys = @compare_axis_keys.map { |k|
+					git = axis_key_git(k)
+					if git
+						[k, git]
+					end
+				}
+				skeys.compact!
+				unless skeys.empty?
+					keys_values = skeys.map { |k, git|
+						values = @mresult_roots.map { |_rt| _rt.axes[k] }
+						values.compact!
+						values.uniq!
+						[k, commits_to_string(git.sort_commits(values))]
+					}
+					@mresult_roots.sort_by! { |_rt|
+						axes = _rt.axes
+						keys_values.map { |k, values |
+							values.index(axes[k]) || -1
+						}
+					}
+				end
+			else
+				@mresult_roots
+			end
+		end
+
+    def compare_groups
+			do_sort_mresult_roots
+			if dedup_mresult_roots
+				@mresult_roots.uniq!
+			end
 			grouper = AxesGrouper.new
 			groups = grouper.set_axes_data(@mresult_roots).
 				       set_group_axis_keys(@compare_axis_keys).
@@ -141,7 +176,7 @@ module Compare
 			block_given? or return enum_for(__method__)
 
 			compare_groups.each { |g|
-				g.each_changed_stat &b
+				g.each_changed_stat(&b)
 			}
 		end
 
@@ -406,6 +441,10 @@ module Compare
 			stat_enum.map { |s|
 				s[CHANGES].map { |c| c.abs }.max || 0
 			}.max || 0
+		end
+
+		def show
+			Compare.show_group @group, @stat_enum
 		end
 
 		def to_data
@@ -745,14 +784,17 @@ module Compare
 	## Helper functions
 
 	def self.commits_comparer(commits, params = nil)
+		git = axis_key_git COMMIT_AXIS_KEY
+		commits = git.sort_commits commits
 		_result_roots = commits.map { |c|
 			MResultRootCollection.new(COMMIT_AXIS_KEY => c.to_s).to_a
 		}.flatten
 		compare_axis_keys = [COMMIT_AXIS_KEY]
 		comparer = Comparer.new
-		comparer.set_mresult_roots _result_roots
-		comparer.set_compare_axis_keys compare_axis_keys
-		comparer.set_params params
+		comparer.set_mresult_roots(_result_roots).
+			set_sort_mresult_roots(false).
+			set_compare_axis_keys(compare_axis_keys).
+			set_params(params)
 	end
 
 	def self.compare_commits(commits, params = nil)
@@ -761,14 +803,17 @@ module Compare
 	end
 
 	def self.ncommits_comparer(commits, params = nil)
+		git = axis_key_git COMMIT_AXIS_KEY
+		commits = git.sort_commits commits
 		_rts = commits.map { |c|
 			NMResultRootCollection.new(COMMIT_AXIS_KEY => c.to_s).to_a
 		}.flatten
 		compare_axis_keys = [COMMIT_AXIS_KEY]
 		comparer = Comparer.new
-		comparer.set_mresult_roots _rts
-		comparer.set_compare_axis_keys compare_axis_keys
-		comparer.set_params params
+		comparer.set_mresult_roots(_rts).
+			set_sort_mresult_roots(false).
+			set_compare_axis_keys(compare_axis_keys).
+			set_params(params)
 	end
 
 	def self.ncompare_commits(commits, params = nil)
@@ -777,6 +822,8 @@ module Compare
 	end
 
 	def self.perf_comparer(commits)
+		git = axis_key_git COMMIT_AXIS_KEY
+		commits = git.sort_commits commits
 		_rts = commits.map { |c|
 			DataStore::Collection.new(mrt_table_set.linux_perf_table, 'commit' => c.to_s).to_a
 		}.flatten
@@ -791,6 +838,7 @@ module Compare
 		compare_axis_keys = [COMMIT_AXIS_KEY]
 		comparer = Comparer.new
 		comparer.set_mresult_roots(_rts).
+			set_sort_mresult_roots(false).
 			set_compare_axis_keys(compare_axis_keys).
 			set_filter_testcase_stat_keys(true).
 			set_sort_by_group(true).
