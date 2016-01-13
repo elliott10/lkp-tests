@@ -24,7 +24,7 @@ download_kernel_initrd()
 	echo "downloading kernel image ..."
 	set_job_state "wget_kernel"
 	kernel_file=$CACHE_DIR/$kernel
-	wget "http://$LKP_SERVER:$LKP_CGI_PORT/~$LKP_USER/$kernel" -nv -N -P $(dirname $kernel_file) || {
+	wget "http://$LKP_SERVER:$LKP_CGI_PORT/~$LKP_USER/$kernel" -nv -P $(dirname $kernel_file) -nc || {
 		echo "failed to download kernel: $kernel" 1>&2
 		exit 1
 	}
@@ -35,7 +35,7 @@ download_kernel_initrd()
 	do
 		_initrd=$(echo $_initrd | sed 's/^\///')
 		local file=$CACHE_DIR/$_initrd
-		wget -nv -N "http://$LKP_SERVER:$LKP_CGI_PORT/~$LKP_USER/$_initrd" -P $(dirname $file) || {
+		wget -nv "http://$LKP_SERVER:$LKP_CGI_PORT/~$LKP_USER/$_initrd" -P $(dirname $file) -nc || {
 			echo Failed to download $_initrd
 			exit 1
 		}
