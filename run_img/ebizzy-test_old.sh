@@ -2,39 +2,48 @@
 
 export_top_env()
 {
-	export LKP_SERVER='localhost'
+	export LKP_SERVER='inn'
 	export LKP_CGI_PORT=80
 	export LKP_CIFS_PORT=139
 	export testcase='ebizzy'
-	export hdd_partitions=
-	export ssd_partitions=
-	export enqueue_time='2016-01-11 08:50:07 +0800'
+	export model='Nehalem-EX'
+	export memory='256G'
+	export nr_cpu=64
+	export nr_ssd_partitions=6
+	export ssd_partitions='/dev/vda /dev/vdb /dev/vdc /dev/vdd /dev/vde /dev/vdf'
+	export swap_partitions='/dev/vdg'
+	export category='benchmark'
+	export branch='pm/linux-next'
 	export commit='c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b'
-	export model='Nehalem'
-	export nr_cpu=2
-	export memory='2G'
-	export queue='cyclic'
-	export testbox='localhost'
-	export tbox_group='localhost'
+	export queue='unit'
+	export repeat_to=2
+	export testbox='lkp-nex04'
+	export tbox_group='lkp-nex04'
 	export kconfig='x86_64-rhel'
+	export enqueue_time='2015-08-30 23:11:41 +0800'
+	export id='d19e3f5a5961468c78e47bf16b230ba6bd6be9f5'
 	export user='lkp'
+	export compiler='gcc-4.9'
+	export head_commit='9ea77b2f63138e2a61381bc9a2a1322191c86ea5'
+	export base_commit='c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b'
 	export kernel='/pkg/linux/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/vmlinuz-4.2.0-rc8'
 	export rootfs='debian-x86_64-2015-02-07.cgz'
-	export result_root='/result/ebizzy/performance-200%-100x-10s/localhost/debian-x86_64-2015-02-07.cgz/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/0'
-	export dequeue_time='2016-01-12 07:13:51 +0800'
-	export job_file='/lkp/scheduled/ebizzy-test.yaml'
+	export result_root='/result/ebizzy/performance-200%-100x-10s/lkp-nex04/debian-x86_64-2015-02-07.cgz/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/0'
+	export job_file='/lkp/scheduled/lkp-nex04/unit_ebizzy-performance-200%-100x-10s-x86_64-rhel-BASE-c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b-20150830-10493-9a909m-0.yaml'
+	export dequeue_time='2015-08-30 23:42:55 +0800'
+	export max_uptime=3319.6800000000003
 	export initrd='/osimage/debian/debian-x86_64-2015-02-07.cgz'
 	export bootloader_append='root=/dev/ram0
 user=lkp
-job=/lkp/scheduled/ebizzy-test.yaml
+job=/lkp/scheduled/lkp-nex04/unit_ebizzy-performance-200%-100x-10s-x86_64-rhel-BASE-c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b-20150830-10493-9a909m-0.yaml
 ARCH=x86_64
 kconfig=x86_64-rhel
 branch=pm/linux-next
 commit=c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b
 BOOT_IMAGE=/pkg/linux/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/vmlinuz-4.2.0-rc8
 max_uptime=3319
-RESULT_ROOT=/result/ebizzy/performance-200%-100x-10s/localhost/debian-x86_64-2015-02-07.cgz/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/0
-LKP_SERVER=localhost
+RESULT_ROOT=/result/ebizzy/performance-200%-100x-10s/lkp-nex04/debian-x86_64-2015-02-07.cgz/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/0
+LKP_SERVER=inn
 
 
 earlyprintk=ttyS0,115200 systemd.log_level=err
@@ -46,8 +55,6 @@ rw'
 	export lkp_initrd='/lkp/lkp/lkp-x86_64.cgz'
 	export modules_initrd='/pkg/linux/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/modules.cgz'
 	export bm_initrd='/osimage/deps/debian-x86_64-2015-02-07.cgz/lkp.cgz,/osimage/deps/debian-x86_64-2015-02-07.cgz/run-ipconfig.cgz,/osimage/deps/debian-x86_64-2015-02-07.cgz/turbostat.cgz,/lkp/benchmarks/turbostat.cgz,/lkp/benchmarks/ebizzy-x86_64.cgz'
-	export linux_headers_initrd='/pkg/linux/x86_64-rhel/gcc-4.9/ca71cfeead38965ee7868a2e97a9206618a0a64e/linux-headers.cgz'
-	export job_state='booting'
 
 	[ -n "$LKP_SRC" ] ||
 	export LKP_SRC=/lkp/${user:-lkp}/src
@@ -96,15 +103,7 @@ run_job()
 	}
 	default_monitors &
 
-	run_setup $LKP_SRC/setup/nr_threads '200%'
-
-	run_setup $LKP_SRC/setup/iterations '100x'
-
-	export duration='10s'
-	run_test $LKP_SRC/tests/wrapper ebizzy
-	unset duration
-
-	run_setup $LKP_SRC/setup/cpufreq_governor
+	run_setup $LKP_SRC/setup/cpufreq_governor 'performance'
 
 	default_watchdogs()
 	{
@@ -112,6 +111,14 @@ run_job()
 		run_monitor $LKP_SRC/monitors/wrapper watchdog
 	}
 	default_watchdogs &
+
+	run_setup $LKP_SRC/setup/nr_threads '200%'
+
+	run_setup $LKP_SRC/setup/iterations '1x'
+
+	export duration='10s'
+	run_test $LKP_SRC/tests/wrapper ebizzy
+	unset duration
 
 	wait
 }
@@ -136,19 +143,35 @@ extract_stats()
 	$LKP_SRC/stats/wrapper nfsstat
 	$LKP_SRC/stats/wrapper cpuidle
 	$LKP_SRC/stats/wrapper turbostat
+	$LKP_SRC/stats/wrapper pmeter
 	$LKP_SRC/stats/wrapper sched_debug
 	$LKP_SRC/stats/wrapper ebizzy
 
 	$LKP_SRC/stats/wrapper time ebizzy.time
 	$LKP_SRC/stats/wrapper time
-	$LKP_SRC/stats/wrapper dmesg
 	$LKP_SRC/stats/wrapper kmsg
+	$LKP_SRC/stats/wrapper dmesg
 	$LKP_SRC/stats/wrapper stderr
 	$LKP_SRC/stats/wrapper last_state
 }
 
 "$@"
 job_state=wget_kernel
+job_state=wget_kernel
+job_state=wget_kernel
+job_state=wget_kernel
 job_state=wget_initrd
 job_state=wget_kernel
 job_state=wget_initrd
+job_state=wget_kernel
+job_state=wget_initrd
+job_state=wget_kernel
+job_state=wget_initrd
+job_state=wget_kernel
+job_state=wget_initrd
+job_state=wget_kernel
+job_state=wget_kernel
+job_state=wget_kernel
+job_state=wget_kernel
+job_state=wget_kernel
+job_state=wget_kernel
