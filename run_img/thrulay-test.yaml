@@ -1,5 +1,5 @@
 ---
-testcase: hackbench
+testcase: thrulay
 default-monitors:
   wait: activate-monitor
   kmsg: 
@@ -27,15 +27,15 @@ default-monitors:
   pmeter: 
   sched_debug:
     interval: 60
-memory: 2G
+memory: 3G
 hdd_partitions: 
 ssd_partitions: 
 category: benchmark
-nr_threads: 50%
-iterations: 5x
-perf-profile:
-  freq: 800
-hackbench:
-  mode: threads
-  ipc: socket
-enqueue_time: 2015-12-26 01:44:25.601892331 +08:00
+runtime: 300s
+cluster: cs-localhost
+if role server:
+  thrulay-server: 
+if role client:
+  thrulay: 
+enqueue_time: 2016-01-15 10:41:01.358506957 +08:00
+node_roles: server client

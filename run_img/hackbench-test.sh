@@ -104,3 +104,4 @@ extract_stats()
 }
 
 "$@"
+job_state=wget_kernel
