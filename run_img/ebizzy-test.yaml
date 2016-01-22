@@ -34,7 +34,7 @@ hdd_partitions:
 ssd_partitions:
 enqueue_time: 2016-01-11 08:50:07.735827318 +08:00
 nr_threads: 200%
-iterations: 5x
+iterations: 2x
 ebizzy:
   duration: 10s
 cpufreq_governor:

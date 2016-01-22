@@ -107,7 +107,7 @@ bm_initrds = ['/osimage/deps/debian-x86_64-2015-02-07.cgz/lkp.cgz',
 	      '/osimage/deps/debian-x86_64-2015-02-07.cgz/run-ipconfig.cgz',
 	      '/osimage/deps/debian-x86_64-2015-02-07.cgz/turbostat.cgz',
 	      '/lkp/benchmarks/turbostat.cgz']
-bm_initrds << "/lkp/benchmarks/#{job['testcase']}.cgz"
+bm_initrds << "/lkp/benchmarks/#{job['testcase']}-#{arch}.cgz"
 job['bm_initrd'] ||= bm_initrds.join(', ')
 job['max_uptime'] ||= 3300
 

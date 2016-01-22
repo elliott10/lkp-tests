@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+flag = false
+
+while line = STDIN.gets
+	case line.chomp!
+	when /^=+LINUX DATA BELOW=+$/
+		flag = true
+    when /^MEMORY INDEX        : ([0-9\.]+).*$/
+        memindex = $1
+        puts 'memindex: ' + memindex
+    when /^INTEGER INDEX       : ([0-9\.]+).*$/
+        intindex = $1
+        puts 'intindex: ' + intindex
+    when /^FLOATING_POINT INDEX: ([0-9\.]+).*$/
+        fltindex = $1
+        puts 'fltindex: ' + fltindex
+    end
+end
