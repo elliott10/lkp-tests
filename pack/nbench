@@ -8,4 +8,5 @@ install()
     cd "$source_dir"
     make
 	cp -af $BM_NAME $BM_ROOT
+    cp -af *.DAT $BM_ROOT
 }

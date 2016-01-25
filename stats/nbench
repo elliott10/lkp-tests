@@ -7,13 +7,20 @@ while line = STDIN.gets
 	when /^=+LINUX DATA BELOW=+$/
 		flag = true
     when /^MEMORY INDEX        : ([0-9\.]+).*$/
-        memindex = $1
-        puts 'memindex: ' + memindex
+        if flag == true
+            memindex = $1
+            puts 'memindex: ' + memindex
+        end
     when /^INTEGER INDEX       : ([0-9\.]+).*$/
-        intindex = $1
-        puts 'intindex: ' + intindex
-    when /^FLOATING_POINT INDEX: ([0-9\.]+).*$/
-        fltindex = $1
-        puts 'fltindex: ' + fltindex
+        if flag == true
+            intindex = $1
+            puts 'intindex: ' + intindex
+        end
+    when /^FLOATING-POINT INDEX: ([0-9\.]+).*$/
+        if flag == true
+            fltindex = $1
+            puts 'fltindex: ' + fltindex
+            flag = false
+        end
     end
 end
