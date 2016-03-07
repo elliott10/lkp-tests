@@ -129,7 +129,7 @@ job_script=$1
 export_top_env
 replace_script_partition_val $job_script
 
-# create lkp-$arch.cgz
+# create lkp-$arch.cgz (archive of lkp-test project src)
 export LKP_USER=$user
 if [[ "$kconfig" =~ ^(i386|x86_64)- ]]; then
 	arch=${kconfig%%-*}
@@ -141,7 +141,7 @@ srcpath=$(dirname $(dirname $(readlink -e -v $0)))
 $LKP_SRC/sbin/pack -a $arch lkp-src
 lkp_initrd=/tmp/lkp_initrd-$USER/lkp/$LKP_USER/lkp-$arch.cgz
 
-# create job_initrd.cgz
+# create job_initrd.cgz (archive of job-script file)
 job_initrd=/tmp${job_file%.yaml}.cgz
 job_initrd_dir=${job_file%/*}
 create_job_initrd

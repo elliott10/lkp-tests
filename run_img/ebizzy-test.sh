@@ -12,7 +12,7 @@ export_top_env()
 	export commit='c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b'
 	export model='Nehalem'
 	export nr_cpu=2
-	export memory='2G'
+	export memory='1G'
 	export queue='cyclic'
 	export testbox='localhost'
 	export tbox_group='localhost'
@@ -20,11 +20,11 @@ export_top_env()
 	export user='lkp'
 	export kernel='/pkg/linux/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/vmlinuz-4.2.0-rc8'
 	export rootfs='debian-x86_64-2015-02-07.cgz'
-	export result_root='/result/ebizzy/performance-200%-100x-10s/localhost/debian-x86_64-2015-02-07.cgz/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/0'
+	export result_root='/result/ebizzy/performance-200%-10x-10s/localhost/debian-x86_64-2015-02-07.cgz/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/0'
 	export dequeue_time='2016-01-12 07:13:51 +0800'
 	export job_file='/lkp/scheduled/ebizzy-test.yaml'
 	export initrd='/osimage/debian/debian-x86_64-2015-02-07.cgz'
-	export bootloader_append='root=/dev/ram0
+	export bootloader_append='"root=/dev/ram0
 user=lkp
 job=/lkp/scheduled/ebizzy-test.yaml
 ARCH=x86_64
@@ -42,7 +42,7 @@ debug apic=debug sysrq_always_enabled rcupdate.rcu_cpu_stall_timeout=100
 panic=-1 softlockup_panic=1 nmi_watchdog=panic oops=panic load_ramdisk=2 prompt_ramdisk=0
 console=ttyS0,115200 console=tty0 vga=normal
 
-rw'
+rw"'
 	export lkp_initrd='/lkp/lkp/lkp-x86_64.cgz'
 	export modules_initrd='/pkg/linux/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/modules.cgz'
 	export bm_initrd='/osimage/deps/debian-x86_64-2015-02-07.cgz/lkp.cgz,/osimage/deps/debian-x86_64-2015-02-07.cgz/run-ipconfig.cgz,/osimage/deps/debian-x86_64-2015-02-07.cgz/turbostat.cgz,/lkp/benchmarks/turbostat.cgz,/lkp/benchmarks/ebizzy-x86_64.cgz'
@@ -98,7 +98,7 @@ run_job()
 
 	run_setup $LKP_SRC/setup/nr_threads '200%'
 
-	run_setup $LKP_SRC/setup/iterations '100x'
+	run_setup $LKP_SRC/setup/iterations '2x'
 
 	export duration='10s'
 	run_test $LKP_SRC/tests/wrapper ebizzy
@@ -148,6 +148,12 @@ extract_stats()
 }
 
 "$@"
+job_state=wget_kernel
+job_state=wget_initrd
+job_state=wget_kernel
+job_state=wget_initrd
+job_state=wget_kernel
+job_state=wget_initrd
 job_state=wget_kernel
 job_state=wget_initrd
 job_state=wget_kernel
