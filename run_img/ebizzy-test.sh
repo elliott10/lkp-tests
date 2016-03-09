@@ -148,23 +148,3 @@ extract_stats()
 }
 
 "$@"
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
