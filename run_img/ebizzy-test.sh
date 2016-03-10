@@ -20,7 +20,7 @@ export_top_env()
 	export user='lkp'
 	export kernel='/pkg/linux/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/vmlinuz-4.2.0-rc8'
 	export rootfs='debian-x86_64-2015-02-07.cgz'
-	export result_root='/result/ebizzy/performance-200%-10x-10s/localhost/debian-x86_64-2015-02-07.cgz/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/0'
+	export result_root='/result/ebizzy/performance-200%-100x-10s/localhost/debian-x86_64-2015-02-07.cgz/x86_64-rhel/gcc-4.9/c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b/0' #useless
 	export dequeue_time='2016-01-12 07:13:51 +0800'
 	export job_file='/lkp/scheduled/ebizzy-test.yaml'
 	export initrd='/osimage/debian/debian-x86_64-2015-02-07.cgz'

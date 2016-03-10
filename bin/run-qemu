@@ -87,12 +87,12 @@ job['LKP_CGI_PORT'] = 80
 job['LKP_CIFS_PORT'] = 139
 
 # Append build info
-hostname = 'kvm'
-branch = 'linux-next'  # FIXME!
-arch = 'x86_64'  # FIXME!
-kconfig = 'x86_64-rhel'  # FIXME!
-compiler = 'gcc-4.9'  # FIXME!
-commit = 'c13dcf9f2d6f5f06ef1bf79ec456df614c5e058b'  # FIXME!
+hostname = 'kvm-test'
+branch = 'branch-test'  # FIXME!
+arch = 'xtest'  # FIXME!
+kconfig = 'x86_64-test'  # FIXME!
+compiler = 'gcc-test'  # FIXME!
+commit = 'test-commit'  # FIXME!
 
 job['testbox'] ||= hostname
 job['tbox_group'] ||= tbox_group(hostname)
@@ -106,14 +106,14 @@ job['commit'] ||= commit
 user = 'lkp'
 job['user'] ||= user
 
-# Append kernel & initrd info
-kernel_path = "#{job['kconfig']}/#{job['compiler']}/#{job['commit']}}"
+# Append kernel & initrd info (most from /tmp/lkp-qemu-downloads)
+kernel_path = "#{job['kconfig']}/#{job['compiler']}/#{job['commit']}"
 job['kernel'] ||= "/pkg/linux/#{kernel_path}/vmlinuz-4.2.0-rc8"  # FIXME!
 job['modules_initrd'] ||= "/pkg/linux/#{kernel_path}/modules.cgz"
 job['linux_headers_initrd'] ||= "/pkg/linux/#{kernel_path}/linux-headers.cgz"
 job['rootfs'] ||= 'debian-x86_64'  # FIXME!
 job['initrd'] ||= '/osimage/debian/debian-x86_64-2015-02-07.cgz'  # FIXME!
-job['lkp_initrd'] ||= '/lkp/lkp/lkp-x86_64.cgz'
+job['lkp_initrd'] ||= '/lkp/lkp/lkp-x86_64.cgz' # from /tmp/lkp_initrd-root
 bm_initrds = ['/osimage/deps/debian-x86_64-2015-02-07.cgz/lkp.cgz',
 	      '/osimage/deps/debian-x86_64-2015-02-07.cgz/run-ipconfig.cgz',
 	      '/osimage/deps/debian-x86_64-2015-02-07.cgz/turbostat.cgz',
@@ -164,11 +164,13 @@ jobfile_out = File.join('/tmp', scheduled_jobfile)
 FileUtils.mkdir_p(File.dirname(jobfile_out))
 job.save(jobfile_out)
 
+# generate .sh file 
 job_script = File.join('/tmp', 'lkp/scheduled/kvm', File.basename(jobfile, '.*') + '.sh')
 File.open(job_script, mode='w', perm=0775) do |file|
 	job2sh(deepcopy(job.to_hash), file)
 end
 
+# use `qemu` to run .sh file
 ENV['RESULT_ROOT'] = result_root
 system "#{LKP_SRC}/lkp-exec/qemu", '-o', result_root, job_script
 system job_script, 'extract_stats'
