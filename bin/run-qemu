@@ -95,9 +95,9 @@ job['LKP_CIFS_PORT'] = 139
 hostname = 'chy-KVM'
 branch = 'master'  # FIXME!
 arch = 'x86_64'  # FIXME!
-kconfig = kernel_path.split($/)[1] #'x86_64-test'  # FIXME!
-compiler = kernel_path.split($/)[2] #'gcc-test'  # FIXME!
-commit = kernel_path.split($/)[3] #'test-commit'  # FIXME!
+kconfig = kernel_path.split('/')[1] #'x86_64-test'  # FIXME!
+compiler = kernel_path.split('/')[2] #'gcc-test'  # FIXME!
+commit = kernel_path.split('/')[3] #'test-commit'  # FIXME!
 
 job['testbox'] ||= hostname
 job['tbox_group'] ||= tbox_group(hostname)
