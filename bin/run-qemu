@@ -56,6 +56,11 @@ job.load(jobfile) or (
 	exit 1
 )
 
+kernel_path = ARGV[1]
+#"#{job['kconfig']}/#{job['compiler']}/#{job['commit']}"
+
+kernel_name = ARGV[2]
+
 def append_fields(job, yaml_file)
 	load_yaml(yaml_file).each { |k, v|
 		job[k] ||= v
@@ -82,17 +87,17 @@ $opt_set_key_value.each { |k, v|
 append_fields(job, File.join(LKP_SRC, 'hosts', 'vm-vp-1G'))
 
 # Append server info
-job['LKP_SERVER'] = 'localhost'
+job['LKP_SERVER'] = '192.168.0.119'
 job['LKP_CGI_PORT'] = 80
 job['LKP_CIFS_PORT'] = 139
 
 # Append build info
-hostname = 'kvm-test'
-branch = 'branch-test'  # FIXME!
-arch = 'xtest'  # FIXME!
-kconfig = 'x86_64-test'  # FIXME!
-compiler = 'gcc-test'  # FIXME!
-commit = 'test-commit'  # FIXME!
+hostname = 'chy-KVM'
+branch = 'master'  # FIXME!
+arch = 'x86_64'  # FIXME!
+kconfig = kernel_path.split($/)[1] #'x86_64-test'  # FIXME!
+compiler = kernel_path.split($/)[2] #'gcc-test'  # FIXME!
+commit = kernel_path.split($/)[3] #'test-commit'  # FIXME!
 
 job['testbox'] ||= hostname
 job['tbox_group'] ||= tbox_group(hostname)
@@ -107,10 +112,9 @@ user = 'lkp'
 job['user'] ||= user
 
 # Append kernel & initrd info (most from /tmp/lkp-qemu-downloads)
-kernel_path = "#{job['kconfig']}/#{job['compiler']}/#{job['commit']}"
-job['kernel'] ||= "/pkg/linux/#{kernel_path}/vmlinuz-4.2.0-rc8"  # FIXME!
-job['modules_initrd'] ||= "/pkg/linux/#{kernel_path}/modules.cgz"
-job['linux_headers_initrd'] ||= "/pkg/linux/#{kernel_path}/linux-headers.cgz"
+job['kernel'] ||= "/pkg/#{kernel_path}/#{kernel_name}"  # FIXME!
+job['modules_initrd'] ||= "/pkg/#{kernel_path}/modules.cgz"
+job['linux_headers_initrd'] ||= "/pkg/#{kernel_path}/linux-headers.cgz"
 job['rootfs'] ||= 'debian-x86_64'  # FIXME!
 job['initrd'] ||= '/osimage/debian/debian-x86_64-2015-02-07.cgz'  # FIXME!
 job['lkp_initrd'] ||= '/lkp/lkp/lkp-x86_64.cgz' # from /tmp/lkp_initrd-root

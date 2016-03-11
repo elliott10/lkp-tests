@@ -163,7 +163,7 @@ mkdir -p $vm_result_path
 
 # download kernel and initrds, then cat them
 #LKP_SERVER=bee.sh.intel.com
-LKP_SERVER=localhost
+LKP_SERVER=192.168.0.119
 CACHE_DIR=/tmp/lkp-qemu-downloads
 [ -d $CACHE_DIR ] || mkdir $CACHE_DIR
 LKP_USER="lkp"
