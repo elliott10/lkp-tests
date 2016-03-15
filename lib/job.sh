@@ -181,6 +181,7 @@ start_daemon()
 
 run_test()
 {
+    echo "== run_test =="
 	local program=${1##*/}
 	[ "$program" = 'wrapper' ] && program=$2
 

@@ -20,6 +20,7 @@ ERR_UNKNOWN=127		# Unknown error
 ## Other
 ##
 
+## IMPORTANT ##
 KERNEL_ROOT='/pkg/linux'
 
 BOOT_TEST_CASE='boot'

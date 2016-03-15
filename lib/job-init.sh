@@ -151,6 +151,7 @@ clean_job_resource()
 }
 
 job_done() {
+    echo '== job_done =='
 	$LKP_SRC/monitors/event/wakeup job-finished
 	touch $TMP/job-finished
 	clean_job_resource
@@ -192,6 +193,7 @@ job_env()
 # per-job initiation; should be invoked before run a job
 job_init()
 {
+    echo "== job_init =="
 	refresh_lkp_tmp
 	cp /proc/uptime $TMP/boot-time
 

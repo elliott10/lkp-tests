@@ -68,8 +68,8 @@ create_job_initrd()
 	cp $job_script /tmp${job_file%.yaml}.sh
 	archive=/tmp${job_file%.yaml}
 	(cd /tmp && find lkp | cpio -o -H newc -F $archive.cpio
-	 gzip -n -9 $archive.cpio
-	 mv -f $archive.cpio.gz $archive.cgz)
+	    gzip -n -9 $archive.cpio
+	    mv -f $archive.cpio.gz $archive.cgz)
 }
 
 get_qemu_kernel_initrd()
@@ -122,8 +122,9 @@ done
 
 shift $(($OPTIND-1))
 
-job_script=$1
 
+# source job.sh to current shell
+job_script=$1
 [ -n "$job_script" ] || usage
 . $job_script
 export_top_env
@@ -162,11 +163,12 @@ fi
 mkdir -p $vm_result_path
 
 # download kernel and initrds, then cat them
+# already set in `bin/run-qemu`
 #LKP_SERVER=bee.sh.intel.com
-LKP_SERVER=192.168.0.119
-CACHE_DIR=/tmp/lkp-qemu-downloads
+#LKP_SERVER=localhost
+#LKP_USER="lkp"
+CACHE_DIR=/lkp-cache/lkp-qemu-downloads
 [ -d $CACHE_DIR ] || mkdir $CACHE_DIR
-LKP_USER="lkp"
 
 run_kvm()
 {
