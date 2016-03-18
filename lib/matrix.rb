@@ -153,6 +153,7 @@ def matrix_delete_col(matrix, col)
 	}
 end
 
+# get average/matrix data
 def unite_to(stats, matrix_root, max_cols = nil, delete = false)
 	matrix_file = matrix_root + '/matrix.json'
 

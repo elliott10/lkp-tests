@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# refer to `run-local` file. 
+# simplify the `.sh` file generating.
 
 require 'optparse'
 require 'fileutils'
@@ -160,7 +162,6 @@ cmdline_opts = ['root=/dev/ram0',
 		'load_ramdisk=2',
 		'prompt_ramdisk=0',
 		'console=ttyS0,115200',
-		'console=tty0',
 		'vga=normal',
 		'rw']
 job['bootloader_append'] = cmdline_opts.join(' ')
@@ -183,6 +184,7 @@ system job_script, 'extract_stats'
 FileUtils.cp(jobfile_out, result_root + '/job.yaml')
 FileUtils.cp(job_script, result_root + '/job.sh')
 
+# generate final data: stats.json/average.json/matrix.json
 stats = create_stats_matrix ENV['RESULT_ROOT']
 stats['stats_source'] = result_root + '/stats.json'
 unite_to(stats, _result_root)

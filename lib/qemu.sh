@@ -74,7 +74,7 @@ setup_qemu_drives()
 setup_qemu_console()
 {
 	if [[ "$DISPLAY" ]]; then
-		qemu_console_option=
+		qemu_console_option="-serial stdio"
 	elif [[ -t 1 ]]; then
 		qemu_console_option="-display none -monitor null -serial stdio"
 	else

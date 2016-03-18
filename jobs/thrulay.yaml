@@ -10,4 +10,3 @@ if role server:
 
 if role client:
   thrulay:
-job_state=wget_kernel

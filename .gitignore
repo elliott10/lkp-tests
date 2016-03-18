@@ -7,5 +7,5 @@ bin/cat-*
 bin/gzip-*
 bin/tee-*
 monitors/event/wakeup
-
+tags
 run
