@@ -185,7 +185,7 @@ run_kvm()
 		$model
 		-fsdev local,id=test_dev,path=$vm_result_path,security_model=none -device virtio-9p-pci,fsdev=test_dev,mount_tag=$mount_tag
 		-kernel $kernel_file
-		-append "\"$bootloader_append ip=dhcp result_service=$mount_tag\""
+		-append "$bootloader_append ip=dhcp result_service=$mount_tag"
 		$initrd_option
 		-smp $nr_cpu
 		-m $mem_mb
@@ -195,6 +195,7 @@ run_kvm()
 		$qemu_netdev_option
 		$qemu_console_option
 		$QEMU_DRIVE_OPTION
+        -vnc localhost:1
 	)
 	echo "exec command: ${KVM_COMMAND[@]}"
 	"${KVM_COMMAND[@]}"
