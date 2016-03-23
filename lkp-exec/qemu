@@ -1,4 +1,5 @@
 #!/bin/bash
+# basic program to run benchmarks in qemu virtual environment.
 
 . $LKP_SRC/lib/kexec.sh
 . $LKP_SRC/lib/qemu.sh

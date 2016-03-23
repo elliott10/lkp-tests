@@ -1,4 +1,10 @@
 #!/bin/sh
+# Uptime since boot
+# Print the following when the test finishes.
+# - time: seconds since epoch
+# - boot: seconds since the system is up
+# - idle: the amount of time (in seconds) when a CPU is idle (sum of all CPUs)
+
 
 . $LKP_SRC/lib/wait.sh
 setup_wait

@@ -1,4 +1,5 @@
 #!/bin/bash
+# used to run `default_monitors` in `.yaml` file.
 
 set -o pipefail
 

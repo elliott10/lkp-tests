@@ -1,4 +1,8 @@
 #!/bin/sh
+# lkp-tests' main script. 
+# `lkp run *.yaml` > ./run-local
+# `lkp run *.sh`   > ./run-local.sh
+
 
 [ -n "$LKP_SRC" ] ||
 export LKP_SRC=$(dirname $(dirname $(readlink -e -v $0)))

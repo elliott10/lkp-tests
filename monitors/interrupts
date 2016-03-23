@@ -1,6 +1,14 @@
 #!/bin/sh
 # - interval
 
+# Interrupt statistics from /proc/interrupts
+
+# The statistics, including the seconds since epoch, are collected every $interval
+# seconds if $interval is defined as an environment variable. Otherwise the
+# statistics are collected before and after running the benchmark.
+
+
+
 file=$(basename $0)
 file=${file#proc-}
 

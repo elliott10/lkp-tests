@@ -1,4 +1,8 @@
 #!/bin/sh
+# Latency statistics from /proc/latency_stats
+# The statistics are resetted before running the benchmark and collected after the test finishes.
+
+
 
 # reference code: linux/kernel/latencytop.c
 
