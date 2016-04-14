@@ -135,7 +135,7 @@ seq 1 103 | xargs -n 1 fallocate -l 1g
 
 ## glbenchmark
 
-- usable: hold
+- usable: no
 
 - tag: graphics;
 
@@ -143,6 +143,10 @@ seq 1 103 | xargs -n 1 fallocate -l 1g
 
     Equal to GFXBench.
     GLBenchmark 2.7 is a graphics performance benchmark tool that measures different graphic and computation capabilities of your mobile device. The majority of the tests focus on graphic resources, measuring the quality and performance of the underlying OpenGL ES 2.x implementation.
+
+- detail:
+
+    Focus on performance test rather than stability test. And it needs mouse click to start test(GUI test form).
 
 - page: https://gfxbench.com/benchmark.jsp
 
@@ -419,6 +423,8 @@ seq 1 103 | xargs -n 1 fallocate -l 1g
 - introduction:
 
     Piglit is a collection of automated tests for OpenGL implementations.
+
+- page: https://github.com/Igalia/piglit
 
 ## pm-qa
 
