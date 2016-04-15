@@ -12,10 +12,10 @@ The keys fall into 2 main categories:
 If the key matches some script file in the below paths, it is treated as an
 executable script.
 
-  - $LKP_SRC/setup
-  - $LKP_SRC/monitors
-  - $LKP_SRC/daemon
-  - $LKP_SRC/tests
+  - `$LKP_SRC/setup`
+  - `$LKP_SRC/monitors`
+  - `$LKP_SRC/daemon`
+  - `$LKP_SRC/tests`
 
 
 ## Variables
