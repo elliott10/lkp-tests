@@ -18,7 +18,9 @@
 
 ### fsmark
 
-可以正常运行，并得到正确结果。
+运行`lkp pack fsmark`即可下载安装，
+
+运行`lkp run jobs/fsmark-generic-1hdd-test.yaml`可得到正确结果。
 
 ```
 2016-04-15 15:59:19 ./fs_mark -d /1 -d /2 -d /3 -d /4 -n 256 -L 1 -S 0 -s 1048576
@@ -36,6 +38,20 @@ FSUse%        Count         Size    Files/sec     App Overhead
 
 ## CPU/Memory
 
-### ebizzy
+### LTP
 
-之前的这个测试即可作为代表。
+下载LTP的官方tar包后，解压，按以下命令编译安装：
+
+    ./configure
+    make all
+    make install
+
+之后把安装的目录链接到$BENCHMARK_DIR：
+
+    ln -s /opt/ltp /lkp/benchmarks/ltp
+
+再用LKP的内部命令运行即可(本地运行)：
+
+    lkp run jobs/ltp-1hdd.yaml
+
+详见LTP[安装说明](https://github.com/linux-test-project/ltp/blob/master/INSTALL)
