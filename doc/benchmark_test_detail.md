@@ -55,3 +55,14 @@ FSUse%        Count         Size    Files/sec     App Overhead
     lkp run jobs/ltp-1hdd.yaml
 
 详见LTP[安装说明](https://github.com/linux-test-project/ltp/blob/master/INSTALL)
+
+## Android
+
+### Robotium
+
+在Linux下，安装[Andriod Studio](http://developer.android.com/sdk/index.html)并且按照Robotium的[文档](https://github.com/RobotiumTech/robotium/wiki/Getting-Started#android-studio)，下载好示例工程代码，再依据Readme运行，可以实现本机的测试。
+
+但是，对于如何将其与LKP-tests进行结合，有以下问题：
+
+该测试实际上有两台设备，一台PC机、一台安卓机（或者虚拟的），是通过PC机输入`adb`命令控制安卓机的测试，但是LKP-tests的测试原理是一台机器（或者虚拟的）自己在本地环境运行测试用例的命令，并将运行结果储存，结果一般是命令行里的标准输出流。这样来看，如何控制qemu里的机器就成了难以绕过的问题。
+
