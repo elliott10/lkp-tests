@@ -9,10 +9,12 @@ export_top_env()
 	export model='Nehalem-EX'
 	#export memory='256G'
 	#export nr_cpu=64
-	export memory='2G'
+	export memory='8G'
 	export nr_cpu=2
-	export nr_ssd_partitions=6
-	export ssd_partitions='/dev/vda /dev/vdb /dev/vdc /dev/vdd /dev/vde /dev/vdf'
+	#export nr_ssd_partitions=6
+	#export ssd_partitions='/dev/vda /dev/vdb /dev/vdc /dev/vdd /dev/vde /dev/vdf'
+	export nr_ssd_partitions=1
+	export ssd_partitions='/dev/vda'
 	export swap_partitions='/dev/vdg'
 	export category='benchmark'
 	export branch='pm/linux-next'
@@ -158,24 +160,6 @@ extract_stats()
 }
 
 "$@"
-job_state=wget_kernel
-job_state=wget_kernel
-job_state=wget_kernel
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_initrd
-job_state=wget_kernel
-job_state=wget_kernel
-job_state=wget_kernel
-job_state=wget_kernel
-job_state=wget_kernel
 job_state=wget_kernel
 job_state=wget_initrd
 job_state=wget_kernel

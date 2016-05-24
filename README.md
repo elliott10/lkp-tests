@@ -5,11 +5,17 @@
 ```
 	git clone git://git.kernel.org/pub/scm/linux/kernel/git/wfg/lkp-tests.git
 
+	su root
+
 	cd lkp-tests
 	export LKP_SRC=$PWD
 	export PATH=$PATH:$LKP_SRC/bin
 
 	lkp help
+
+	#EXAMPLES
+	lkp qemu -S ./ebizzy-test.sh
+
 ```
 
 ## Install packages for a job
