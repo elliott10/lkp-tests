@@ -23,6 +23,7 @@ class DataSet
 		if not @stats
 			@stats = {}
 			[_rt.axes_path, matrix].each { |data|
+				#puts data
 				data.keys.each { |k|
 					type = datum_type(data[k])
 					next if type == :string or type == :string_list

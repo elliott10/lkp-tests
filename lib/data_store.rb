@@ -226,8 +226,8 @@ module DataStore
 	class << Layout
 		private :new
 
-		singleton_class.include AddCachedMethod
-		add_cached_method :new
+		#singleton_class.include AddCachedMethod
+		#add_cached_method :new
 
 		def open(path)
 			path = canonicalize_path path
@@ -798,8 +798,8 @@ module DataStore
 	class << Table
 		private :new
 
-		singleton_class.include AddCachedMethod
-		add_cached_method :new
+		#singleton_class.include AddCachedMethod
+		#add_cached_method :new
 
 		def open(path)
 			path = canonicalize_path path

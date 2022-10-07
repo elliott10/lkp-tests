@@ -257,6 +257,8 @@ end
 
 class << MResultRoot
 	def valid?(path)
+		puts path
+		return true
 		return true if File.exists? File.join(path, self::JOB_FILE1)
 		return false if !File.exists? path
 		return Dir[File.join path, self::JOB_GLOB].first
